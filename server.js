@@ -6,8 +6,6 @@ const session = require('express-session')
 const Store = require('express-mysql-session')(session);
 const path = require('path');
 
-const queriesRoutes = require('./routes/queries.routes');
-const consecutiveRoutes = require('./routes/consecutives.routes');
 const userRoutes = require('./routes/user.routes');
 const publicRoutes = require('./routes/public.routes');
 const scheduleRoutes = require('./routes/schedule.routes');
@@ -44,9 +42,7 @@ app.use(flash())
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Serve other pages
-app.use(consecutiveRoutes.routes);
 app.use(userRoutes.routes);
-app.use(queriesRoutes.routes);
 app.use(publicRoutes.routes);
 app.use(scheduleRoutes.routes);
 
