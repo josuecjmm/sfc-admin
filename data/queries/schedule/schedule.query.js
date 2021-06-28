@@ -5,6 +5,12 @@ exports.insert = (day) => {
     `
 };
 
+exports.select = (day) => {
+    return `SELECT 
+    id, hour, total
+    FROM ${day}`
+}
+
 exports.delete = (day) => {
     return `DELETE FROM ${day}`
 }
