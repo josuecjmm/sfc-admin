@@ -1,0 +1,38 @@
+<%- include('../../includes/head.ejs') %>
+
+<%- include('../../includes/navigation.ejs', {html:html}) %>
+
+<h2>Tiquetes Descuento</h2>
+<a type="button" class="btn btn-primary text-white" href="/discountTickets/new">Nuevo</a>
+<br><br>
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th scope="col">Codigo</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Disponibles</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <%discountTickets.forEach(ticket => {%>
+    <tr class="table-light">
+        <th scope="row"><%=ticket.code%></th>
+        <td><%=ticket.Nombre%></td>
+        <td><%=ticket.total%></td>
+        <td><a class="btn btn-secondary text-white" href="/discountTickets/<%=ticket.id%>">Editar</a></td>
+        <td>
+            <form action="/discountTicket/delete" method="post">
+                <input type="hidden" value="<%= ticket.id %>" name="discountTicketId">
+                <button class="btn btn-danger" type="submit">Eliminar</button>
+            </form>
+        </td>
+    </tr>
+    <%})%>
+    </tbody>
+</table>
+<br>
+<br>
+
+<%- include('../../includes/end.ejs') %>

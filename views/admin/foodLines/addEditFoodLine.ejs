@@ -1,0 +1,23 @@
+<%- include('../../includes/head.ejs') %>
+
+<%- include('../../includes/navigation.ejs', {html:html}) %>
+
+<div class="col-lg-8">
+    <form id="editFoodLine" name="editFoodLine" action="<%=foodLine.length > 0 ? '/foodLine/edit' : '/foodLine'%>" method="post">
+        <fieldset>
+            <legend>Informacion de Linea Comida</legend>
+            <div class="form-group">
+                <label for="title">Descripcion</label>
+                <input type="text" class="form-control" id="title" name="title" value="<%= foodLine.length > 0 ? foodLine[0].name : ''  %>">
+                <%if (foodLine.length > 0) {%>
+                    <input type="hidden" value="<%= foodLine[0].id%>" name="id">
+                <%}%>
+
+            </div>
+            <button type="submit" class="btn btn-success text-white">Confirmar</button>
+        </fieldset>
+
+    </form>
+</div>
+
+<%- include('../../includes/end.ejs') %>

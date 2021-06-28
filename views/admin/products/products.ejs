@@ -1,0 +1,47 @@
+<%- include('../../includes/head.ejs') %>
+
+<%- include('../../includes/navigation.ejs', {html:html}) %>
+
+<h2>Productos</h2>
+<a type="button" class="btn btn-primary text-white" href="/products/new">Nuevo</a>
+<br><br>
+<%if (warning) {%>
+    <div class="alert alert-dismissible alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <h4 class="alert-heading">Alerta!</h4>
+        <p class="mb-0">Se debe agregar precios a  <strong style="color: red"><%=product%></strong></p>
+        <p>De lo contrario no se podrá comprar en tienda</p>
+    </div>
+<%}%>
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th scope="col">Codigo</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Imagen</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <%products.forEach(product => {%>
+    <tr class="table-light">
+        <th scope="row"><%=product.id%></th>
+        <td><%=product.name%></td>
+        <td><img src="<%=product.image_url%>" style="height: 25%; width: auto"></td>
+        <td><a class="btn btn-success text-white" href="/products/<%=product.id%>">Editar o Agregar Precios</a></td>
+        <td>
+            <form action="/product/delete" method="post">
+                <input type="hidden" value="<%= product.id %>" name="productId">
+                <button class="btn btn-danger" type="submit">Eliminar</button>
+            </form>
+        </td>
+    </tr>
+    <%})%>
+    </tbody>
+</table>
+<br>
+<br>
+
+<%- include('../../includes/end.ejs') %>

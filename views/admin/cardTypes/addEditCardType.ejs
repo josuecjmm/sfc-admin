@@ -1,0 +1,22 @@
+<%- include('../../includes/head.ejs') %>
+
+<%- include('../../includes/navigation.ejs', {html:html}) %>
+
+<div class="col-lg-8">
+    <form id="editCardType" name="editCardType" action="<%=cardType.length > 0 ? '/cardType/edit' : '/cardType'%>" method="post">
+        <fieldset>
+            <legend>Informacion de Tipo de Tarjeta</legend>
+            <div class="form-group">
+                <label for="title">Descripcion</label>
+                <input type="text" class="form-control" id="title" name="name" value="<%= cardType.length > 0 ? cardType[0].name : ''  %>">
+                <%if (cardType.length > 0) {%>
+                    <input type="hidden" value="<%= cardType[0].id%>" name="id">
+                <%}%>
+            </div>
+            <button type="submit" class="btn btn-success text-white">Confirmar</button>
+        </fieldset>
+
+    </form>
+</div>
+
+<%- include('../../includes/end.ejs') %>

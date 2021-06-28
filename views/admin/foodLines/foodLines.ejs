@@ -1,0 +1,39 @@
+<%- include('../../includes/head.ejs') %>
+
+<%- include('../../includes/navigation.ejs', {html:html}) %>
+
+<h2>Lineas de Comida</h2>
+<a type="button" class="btn btn-primary text-white" href="/foodLines/new">Nuevo</a>
+<br><br>
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th scope="col">Codigo</th>
+        <th scope="col">Nombre</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <%foodLines.forEach(line => {%>
+    <tr class="table-light">
+        <th scope="row"><%=line.id%></th>
+        <td><%=line.name%></td>
+        <td><a class="btn btn-secondary text-white" href="/foodLines/<%=line.id%>">Editar</a></td>
+        <td>
+            <%if(!foodLinesWithConstrains.includes(line.id)) {%>
+                <form action="/foodLine/delete" method="post">
+                    <input type="hidden" value="<%= line.id %>" name="foodLineId">
+                    <button class="btn btn-danger" type="submit">Eliminar</button>
+                </form>
+            <%}%>
+        </td>
+
+    </tr>
+    <%})%>
+    </tbody>
+</table>
+<br>
+<br>
+
+<%- include('../../includes/end.ejs') %>

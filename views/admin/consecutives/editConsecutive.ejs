@@ -1,0 +1,20 @@
+<%- include('../../includes/head.ejs') %>
+
+<%- include('../../includes/navigation.ejs', {html:html}) %>
+
+<div class="col-lg-8">
+    <form id="editConsecutive" name="editConsecutive" action="/consecutive" method="post" >
+        <fieldset>
+            <legend>Informacion del Consecutivo <%=consecutive[0].entity_type%></legend>
+            <div class="form-group">
+                <label for="prefix">Prefijo</label>
+                <input type="text" class="form-control" id="prefix" name="prefix" value="<%=consecutive[0].prefix%>">
+            </div>
+            <input type="hidden" value="<%= consecutive[0].id%>" name="id">
+
+        </fieldset>
+        <button type="submit" class="btn btn-success text-white">Confirmar</button>
+    </form>
+</div>
+
+<%- include('../../includes/end.ejs') %>

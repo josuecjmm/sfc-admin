@@ -1,0 +1,22 @@
+<%- include('../../includes/head.ejs') %>
+
+<%- include('../../includes/navigation.ejs', {html:html}) %>
+
+<div class="col-lg-8">
+    <form id="priceType" name="editPriceType"  action="<%=priceType.length > 0 ? '/priceType/edit' : '/priceType'%>" method="post">
+        <fieldset>
+            <legend>Informacion del Tipo de Precio</legend>
+            <div class="form-group">
+                <label for="title">Descripcion</label>
+                <input type="text" class="form-control" id="title" name="name" value="<%= priceType.length > 0 ? priceType[0].name : ''  %>">
+                <%if (priceType.length > 0) {%>
+                    <input type="hidden" value="<%= priceType[0].id%>" name="id">
+                <%}%>
+            </div>
+            <button type="submit" class="btn btn-success text-white">Confirmar</button>
+        </fieldset>
+
+    </form>
+</div>
+
+<%- include('../../includes/end.ejs') %>

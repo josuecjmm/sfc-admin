@@ -1,0 +1,35 @@
+<%- include('../includes/head.ejs') %>
+
+<%- include('../includes/navigation.ejs', {html:html}) %>
+
+<a type="button" class="btn btn-primary text-white" href="/user/new">Nuevo</a>
+<br>
+<br>
+<%if(users.length > 0) {%>
+    <table class="table table-primary table-hover">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Cedula</th>
+            <th scope="col">Nombre</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <%users.forEach(user => {%>
+        <tr >
+            <th scope="row"><%=user.id%></th>
+            <td><%=user.personalId%></td>
+            <td><%=user.fullName%></td>
+            <td><a class="btn btn-secondary text-white" href="/user/<%=user.id%>">Editar</a></td>
+        </tr>
+        <%})%>
+        </tbody>
+    </table>
+<%}
+else {
+%>
+    <h1>No existen usuarios</h1>
+<%}%>
+
+<%- include('../includes/end.ejs') %>

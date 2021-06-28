@@ -1,0 +1,14 @@
+<%- include('../includes/head.ejs') %>
+
+<%- include('../includes/navigation.ejs', {html:html}, {html:html}) %>
+
+    <h2>Horarios</h2>
+    <form class="form-inline my-2 my-lg-0" action="/createSchedule" method="post">
+        <button class="btn btn-success" type="submit">Crear Semana</button>
+    </form>
+    <form class="form-inline my-2 my-lg-0" action="/deleteSchedule" method="post">
+        <button class="btn btn-danger" type="submit">Borrar Semana</button>
+    </form>
+
+<%- include('../includes/end.ejs') %>
+
