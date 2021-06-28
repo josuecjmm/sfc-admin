@@ -6,7 +6,7 @@ const scheduleController = require('../controller/schedule/schedule.controller')
 const isAuth = require('../middlewares/auth')
 
 // GET /error
-router.get('/home', isAuth,  publicController.getHome );
+router.get('/home', isAuth,  scheduleController.getRecentSchedules );
 router.get('/error', publicController.getError);
 router.get('/translate',  scheduleController.postCreateWeekSchedule);
 

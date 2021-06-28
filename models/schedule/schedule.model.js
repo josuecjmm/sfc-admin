@@ -16,6 +16,12 @@ module.exports = class Schedule {
         );
     }
 
+    static getDay(day) {
+        return db.select(
+            scheduleQuery.select(day), []
+        )
+    }
+
     static deleteDay(day) {
         return db.insertUpdate(
             scheduleQuery.delete(day), []
