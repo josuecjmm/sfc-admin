@@ -9,6 +9,7 @@ const path = require('path');
 const userRoutes = require('./routes/user.routes');
 const publicRoutes = require('./routes/public.routes');
 const scheduleRoutes = require('./routes/schedule.routes');
+const appointmentRoutes = require('./routes/appointment.routes');
 
 const db = require('./config/database.config');
 
@@ -45,6 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(userRoutes.routes);
 app.use(publicRoutes.routes);
 app.use(scheduleRoutes.routes);
+app.use(appointmentRoutes.routes);
 
 // Fallback error
 app.use( (error, req, res, next) => {

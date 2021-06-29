@@ -1,0 +1,31 @@
+<%- include('../includes/head.ejs') %>
+
+<%- include('../includes/navigation.ejs', {html:html}, {html:html}) %>
+
+    <h2>Citas</h2>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <a class="btn btn-primary m-1 text-white" href="/appointment?day=Monday"> Lunes</a>
+        </div>
+        <div class="col">
+            <a class="btn btn-dark m-1 text-white" href="/appointment?day=Tuesday"> Martes</a>
+        </div>
+        <div class="col">
+            <a class="btn btn-primary m-1 text-white" href="/appointment?day=Wednesday"> Miercoles</a>
+        </div>
+        <div class="col">
+            <a class="btn btn-dark m-1 text-white" href="/appointment?day=Thursday"> Jueves</a>
+        </div>
+        <div class="col">
+            <a class="btn btn-primary m-1 text-white" href="/appointment?day=Friday"> Viernes</a>
+        </div>
+        <div class="col">
+            <a class="btn btn-dark m-1 text-white" href="/appointment?day=Saturday"> Sabado</a>
+        </div>
+    </div>
+</div>
+
+
+<%- include('../includes/end.ejs') %>
+

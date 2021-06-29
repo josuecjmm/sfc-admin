@@ -1,0 +1,37 @@
+<%- include('../includes/head.ejs') %>
+
+<%- include('../includes/navigation.ejs', {html:html}, {html:html}) %>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Nueva Cita: <%=translatedDay%></h1>
+        </div>
+        <div class="col-xs-12">
+            <form action="/appointment/new" method="post">
+                <fieldset>
+                    <legend>Horario: </legend>
+                    <div class="form-group">
+                        <select class="form-select" id="schedule" name="schedule">
+                            <%schedules.forEach(schedule => {%>
+                            <option value="<%=schedule.id%>"><%=schedule.hour%> - <%=schedule.total%> disponibles</option>
+                            <%})%>
+                        </select>
+                    </div>
+                    <legend>Usuarios: </legend>
+                    <div class="form-group">
+                        <select multiple="" class="form-select" id="users" name="users">
+                            <%users.forEach(user => {%>
+                            <option value="<%=user.id%>"><%=user.fullName%></option>
+                            <%})%>
+                        </select>
+                    </div>
+                    <input type="hidden" value="<%=day%>" name="day">
+                </fieldset>
+                <button type="submit" class="btn btn-success">Guardar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<%- include('../includes/end.ejs') %>

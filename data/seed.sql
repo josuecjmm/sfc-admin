@@ -21,45 +21,19 @@ CREATE TABLE Error
     error TEXT NOT NULL
 );
 
-
-CREATE TABLE Monday
+CREATE TABLE DaySchedule
 (
     id    INT AUTO_INCREMENT PRIMARY KEY,
+    day   VARCHAR(255) NOT NULL,
     hour VARCHAR(55) NOT NULL,
     total INT NOT NULL
 );
 
-CREATE TABLE Tuesday
+CREATE TABLE Appointment
 (
     id    INT AUTO_INCREMENT PRIMARY KEY,
-    hour VARCHAR(55) NOT NULL,
-    total INT NOT NULL
-);
-
-CREATE TABLE Wednesday
-(
-    id    INT AUTO_INCREMENT PRIMARY KEY,
-    hour VARCHAR(55) NOT NULL,
-    total INT NOT NULL
-);
-
-CREATE TABLE Thursday
-(
-    id    INT AUTO_INCREMENT PRIMARY KEY,
-    hour VARCHAR(55) NOT NULL,
-    total INT NOT NULL
-);
-
-CREATE TABLE Friday
-(
-    id    INT AUTO_INCREMENT PRIMARY KEY,
-    hour VARCHAR(55) NOT NULL,
-    total INT NOT NULL
-);
-
-CREATE TABLE Saturday
-(
-    id    INT AUTO_INCREMENT PRIMARY KEY,
-    hour  VARCHAR(55) NOT NULL,
-    total INT         NOT NULL
+    dayScheduleId   INT,
+    userId INT,
+    FOREIGN KEY( dayScheduleId) REFERENCES DaySchedule(id),
+    FOREIGN KEY( userId) REFERENCES User(id)
 );

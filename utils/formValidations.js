@@ -18,13 +18,6 @@ exports.createUser =  [
     check('password').notEmpty()
         .withMessage(errorMessage.user.password)
         .trim(),
-
-    check('passwordConfirm').custom((value, {req}) => {
-        if (value !== req.body.password) {
-            throw new Error(errorMessage.user.confirmPassword);
-        }
-        return true;
-    }).trim()
 ];
 
 exports.errors = (req) => {
