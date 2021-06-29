@@ -1,4 +1,12 @@
-exports.weekdays = [
+exports.weekdayDays = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday'
+]
+
+exports.weekdaysSchedule = [
     '5:15 AM',
     '6:15 AM',
     '7:15 AM',
@@ -15,7 +23,7 @@ exports.weekdays = [
     '7:00 PM'
 ];
 
-exports.saturday = [
+exports.saturdaySchedule = [
     '7:00 AM',
     '8:00 AM',
     '9:00 AM',

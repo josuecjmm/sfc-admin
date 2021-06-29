@@ -1,29 +1,29 @@
-const {weekdays, saturday} = require('../../constants/schedule')
+const {weekdaysSchedule, saturdaySchedule, weekdayDays} = require('../../constants/schedule')
 const Schedule = require('../../models/schedule/schedule.model')
+const Appointment = require('../../models/appointment/appointment.model')
 const html = require('../../constants/html/index')
 const dateUtil = require('../../utils/date')
 const dateConstants = require('../../constants/date')
 
 exports.postCreateWeekSchedule = async (req, res, next) => {
-    weekdays.forEach(hour => {
-        const weekday = new Schedule(
-            null,
-            hour,
-            8
-        )
-        weekday.save('Monday')
-        weekday.save('Tuesday')
-        weekday.save('Wednesday')
-        weekday.save('Thursday')
-        weekday.save('Friday')
+    weekdayDays.forEach(day => {
+        weekdaysSchedule.forEach(hour => {
+            const weekday = new Schedule(
+                null,
+                day,
+                hour,
+                8
+            )
+            weekday.save()
+        })
     })
-    saturday.forEach(hour => {
+    saturdaySchedule.forEach(hour => {
         const saturday = new Schedule(
             null,
+            'Saturday',
             hour,
             8
         )
-        saturday.save('Saturday')
     })
     res.redirect('/schedule')
 };
@@ -43,23 +43,20 @@ exports.getRecentSchedules = async (req, res, next) => {
         todaySchedules = []
     } else {
         todaySchedules = await Schedule.getDay(todayDay)
+        todaySchedules = JSON.parse(todaySchedules)
     }
 
     res.render('index', {
         pageTitle: 'Inicio',
         html: html,
-        todaySchedules: JSON.parse(todaySchedules),
+        todaySchedules,
         translatedDay
     })
 }
 
 exports.deleteSchedules = async (req, res, next) => {
-    await Schedule.deleteDay('Monday')
-    await Schedule.deleteDay('Tuesday')
-    await Schedule.deleteDay('Wednesday')
-    await Schedule.deleteDay('Thursday')
-    await Schedule.deleteDay('Friday')
-    await Schedule.deleteDay('Saturday')
+    await Appointment.deleteAll();
+    await Schedule.delete();
     res.redirect('/schedule')
 }
 
