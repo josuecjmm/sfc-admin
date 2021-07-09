@@ -59,38 +59,5 @@ exports.insertUpdate = async(query, values) => {
         throw Error(e)
 
     }
-    // finally {
-    //     if(!error) {
-    //         // Set Query Type
-    //         let queryType;
-    //         if(query.includes('INTO') ) {
-    //             queryType = 'INTO'
-    //         } else if(query.includes('UPDATE')) {
-    //             queryType = 'UPDATE'
-    //         } else {
-    //             queryType = 'DELETE'
-    //         }
-    //         // Set entityType
-    //         const entityType = query.split(queryType)[1].split('\n')[0].trim();
-    //
-    //         // Insert Prefix
-    //         if (queryType === 'INTO') {
-    //             let [prefix] = await poolPromise.execute(consecutiveQueries.selectPrefix(), [entityType]);
-    //             if(prefix.length > 0) {
-    //                 prefix = prefix[0].prefix;
-    //                 let [lastId] = await poolPromise.execute(consecutiveQueries.selectLastId(entityType));
-    //                 lastId = parseInt(lastId[0].id);
-    //
-    //                 await poolPromise.execute(consecutiveQueries.updateConsecutivePrefix(entityType), [prefix, lastId]);
-    //             }
-    //         }
-    //         // Insert Audit
-    //         await poolPromise.execute(auditQueries.insertAudit(), [date, query, entityType]);
-    //     } else {
-    //         // Insert Error
-    //         await poolPromise.execute(errorQueries.insertError(), [date, JSON.stringify(error)]);
-    //
-    //     }
-    // }
 
 };
