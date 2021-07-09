@@ -1,3 +1,5 @@
+const {totalAppointmentsPossible} = require('../../../constants/schedule')
+
 exports.insert = (values) => {
     return `INSERT INTO DaySchedule
                 (day, hour, total)
@@ -28,6 +30,13 @@ exports.update = () => {
     `
 }
 
+exports.updateRefillSchedules = () => {
+    return `
+    UPDATE DaySchedule 
+    set total = ${totalAppointmentsPossible}
+    WHERE id IS NOT NULL
+    `
+}
 
 exports.delete = () => {
     return `DELETE

@@ -1,4 +1,7 @@
-const {weekdaysSchedule, saturdaySchedule, weekdayDays} = require('../../constants/schedule')
+const {
+    weekdaysSchedule, saturdaySchedule, weekdayDays,
+    totalAppointmentsPossible
+} = require('../../constants/schedule')
 const Schedule = require('../../models/schedule/schedule.model')
 const Appointment = require('../../models/appointment/appointment.model')
 const html = require('../../constants/html/index')
@@ -9,11 +12,11 @@ exports.postCreateWeekSchedule = async (req, res, next) => {
     let valuesToInsert = '';
     weekdayDays.forEach(day => {
         weekdaysSchedule.forEach(hour => {
-            valuesToInsert += `\n('${day}','${hour}',${8}),`
+            valuesToInsert += `\n('${day}','${hour}',${totalAppointmentsPossible}),`
         })
     })
     saturdaySchedule.forEach(hour => {
-        valuesToInsert += `\n('Saturday','${hour}',${8}),`
+        valuesToInsert += `\n('Saturday','${hour}',${totalAppointmentsPossible}),`
     })
     valuesToInsert = valuesToInsert.slice(0, -1);
     await Schedule.save(valuesToInsert)
@@ -45,6 +48,12 @@ exports.getRecentSchedules = async (req, res, next) => {
         translatedDay
     })
 }
+
+exports.putRefillSchedules = async (req, res, next) => {
+    await Appointment.deleteAll();
+    await Schedule.updateRefillSchedules()
+    res.redirect('/schedule')
+};
 
 exports.deleteSchedules = async (req, res, next) => {
     await Appointment.deleteAll();
