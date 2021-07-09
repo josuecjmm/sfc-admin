@@ -29,6 +29,12 @@ module.exports = class Schedule {
         )
     }
 
+    static updateRefillSchedules() {
+        return db.insertUpdate(
+            scheduleQuery.updateRefillSchedules(), []
+        )
+    }
+
     static delete() {
         return db.insertUpdate(
             scheduleQuery.delete(), []
