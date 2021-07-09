@@ -1,7 +1,7 @@
-exports.insert = () => {
+exports.insert = (values) => {
     return `INSERT INTO DaySchedule
                 (day, hour, total)
-            VALUES (?, ?, ?)
+            VALUES ${values}
     `
 };
 

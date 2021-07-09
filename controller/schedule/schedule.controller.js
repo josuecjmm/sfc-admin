@@ -6,25 +6,17 @@ const dateUtil = require('../../utils/date')
 const dateConstants = require('../../constants/date')
 
 exports.postCreateWeekSchedule = async (req, res, next) => {
+    let valuesToInsert = '';
     weekdayDays.forEach(day => {
         weekdaysSchedule.forEach(hour => {
-            const weekday = new Schedule(
-                null,
-                day,
-                hour,
-                8
-            )
-            weekday.save()
+            valuesToInsert += `\n('${day}','${hour}',${8}),`
         })
     })
     saturdaySchedule.forEach(hour => {
-        const saturday = new Schedule(
-            null,
-            'Saturday',
-            hour,
-            8
-        )
+        valuesToInsert += `\n('Saturday','${hour}',${8}),`
     })
+    valuesToInsert = valuesToInsert.slice(0, -1);
+    await Schedule.save(valuesToInsert)
     res.redirect('/schedule')
 };
 
@@ -39,7 +31,7 @@ exports.getRecentSchedules = async (req, res, next) => {
     const todayDay = dateUtil.getTodayDay()
     const translatedDay = dateConstants.dayTranslation[todayDay]
     let todaySchedules;
-    if(todayDay === 'Sunday') {
+    if (todayDay === 'Sunday') {
         todaySchedules = []
     } else {
         todaySchedules = await Schedule.getDay(todayDay)

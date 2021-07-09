@@ -10,10 +10,10 @@ module.exports = class Schedule {
         this.total = total;
     }
 
-    save() {
+    static save(values) {
         return db.insertUpdate(
-            scheduleQuery.insert(),
-            [this.day, this.hour, this.total]
+            scheduleQuery.insert(values),
+            []
         );
     }
 
