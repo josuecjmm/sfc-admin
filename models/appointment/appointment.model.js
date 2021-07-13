@@ -21,6 +21,11 @@ module.exports = class Appointment {
             appointmentQuery.selectDay(), [day]
         )
     }
+    static getUserAppointments(userId) {
+        return db.select(
+            appointmentQuery.selectUserAppointments(), [userId]
+        )
+    }
 
     static deleteAll() {
         return db.insertUpdate(

@@ -3,6 +3,11 @@
 <%- include('../includes/navigation.ejs', {html:html}, {html:html}) %>
 <div class="container">
     <div class="row">
+        <%if(errors.length > 0) {%>
+        <div class="alert alert-dismissible alert-danger">
+            <strong><%=errors%></strong>
+        </div>
+        <%}%>
         <div class="col-xs-12">
             <h1>Nueva Cita: <%=translatedDay%></h1>
         </div>
@@ -19,7 +24,7 @@
                     </div>
                     <legend>Usuarios: </legend>
                     <div class="form-group">
-                        <select multiple="" class="form-select" id="users" name="users">
+                        <select  class="form-select" id="user" name="user">
                             <%users.forEach(user => {%>
                             <option value="<%=user.id%>"><%=user.fullName%></option>
                             <%})%>

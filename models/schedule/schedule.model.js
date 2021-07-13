@@ -23,6 +23,12 @@ module.exports = class Schedule {
         )
     }
 
+    static selectSingle(id) {
+        return db.select(
+            scheduleQuery.selectSingle(), [id]
+        )
+    }
+
     static update(id) {
         return db.insertUpdate(
             scheduleQuery.update(), [id]
@@ -32,6 +38,18 @@ module.exports = class Schedule {
     static updateRefillSchedules() {
         return db.insertUpdate(
             scheduleQuery.updateRefillSchedules(), []
+        )
+    }
+
+    static updateReduceTotal(id) {
+        return db.insertUpdate(
+            scheduleQuery.updateReduceTotal(), [id]
+        )
+    }
+
+    static updateAddTotal(id) {
+        return db.insertUpdate(
+            scheduleQuery.updateAddTotal(), [id]
         )
     }
 
