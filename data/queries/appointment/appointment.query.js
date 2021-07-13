@@ -19,6 +19,23 @@ exports.selectDay = () => {
     `
 }
 
+
+exports.selectUserAppointments = () => {
+    return `
+        SELECT a.id,
+               U.fullName,
+               a.dayScheduleId,
+               a.userId,
+               DS.day,
+               DS.hour
+        FROM Appointment a
+                 INNER JOIN User U
+                            on a.userId = U.id
+                 INNER JOIN DaySchedule DS on a.dayScheduleId = DS.id
+        WHERE a.userId = ?
+    `
+}
+
 exports.deleteAll = () => {
     return `
         DELETE FROM Appointment
