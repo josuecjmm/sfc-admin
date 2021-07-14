@@ -1,0 +1,33 @@
+<%- include('../includes/head.ejs') %>
+
+<%- include('../includes/navigation.ejs', {html:html}, {html:html}) %>
+
+<h2>Lista Citas</h2>
+<div class="row">
+    <div class="col-xs-3">
+        <table class="table table-hover text-white">
+            <thead>
+            <tr>
+                <th scope="col">Dia</th>
+                <th scope="col">Hora</th>
+                <th scope="col">Nombre</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <%allAppointments.forEach(app => {%>
+                <tr class="table-primary">
+                    <td><%=app.day%></td>
+                    <td><%=app.hour%></td>
+                    <td><%=app.fullName%></td>
+                    <td><button class="btn btn-danger">Borrar</button></td>
+                </tr>
+            <%})%>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<%- include('../includes/end.ejs') %>
+
