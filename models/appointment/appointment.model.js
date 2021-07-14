@@ -16,6 +16,12 @@ module.exports = class Appointment {
         );
     }
 
+    static selectAll() {
+        return db.select(
+            appointmentQuery.selectAll(), []
+        )
+    }
+
     static getDay(day) {
         return db.select(
             appointmentQuery.selectDay(), [day]
