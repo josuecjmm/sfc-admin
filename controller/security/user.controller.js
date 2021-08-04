@@ -47,9 +47,13 @@ exports.login = async (req, res, next) => {
         req.flash('error', 'Usuario o Contraseña invalido')
         res.redirect('/login')
     } else {
-        const userPassword = crypto.decrypt(users[0].password);
-        if (userPassword === password) {
+
+        const currentUser = users[0];
+        const userPassword = crypto.decrypt(currentUser.password);
+
+        if (userPassword === password && currentUser.isAdmin === "1") {
             req.session.isLoggedIn = true;
+            req.session.isAdmin = true;
             res.redirect('/home')
         } else {
             req.flash('error', 'Usuario o Contraseña invalido')
