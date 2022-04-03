@@ -19,7 +19,7 @@ exports.selectAll = () => {
                             on a.userId = U.id
                  INNER JOIN DaySchedule DS on a.dayScheduleId = DS.id
         ORDER BY CASE
-          WHEN Day = 'Monday' THEN 1
+                     WHEN Day = 'Monday' THEN 1
           WHEN Day = 'Tuesday' THEN 2
           WHEN Day = 'Wednesday' THEN 3
           WHEN Day = 'Thursday' THEN 4
@@ -57,6 +57,25 @@ exports.selectUserAppointments = () => {
                             on a.userId = U.id
                  INNER JOIN DaySchedule DS on a.dayScheduleId = DS.id
         WHERE a.userId = ?
+    `
+}
+
+exports.selectUsersRelatedToAppointment = () => {
+    return `SELECT U.personalId, U.fullName, DS.hour
+            FROM Appointment a
+                     INNER JOIN
+                 DaySchedule DS on a.dayScheduleId = DS.id
+                     INNER JOIN
+                 User U on a.userId = U.id
+            WHERE dayScheduleId = ?
+    `
+}
+
+exports.deleteAppointmentsRelatedToScheduleId = () => {
+    return `
+        DELETE
+        FROM Appointment
+        WHERE dayScheduleId = ?
     `
 }
 
