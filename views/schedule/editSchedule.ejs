@@ -1,0 +1,27 @@
+<%- include('../includes/head.ejs') %>
+
+<%- include('../includes/navigation.ejs', {html:html}, {html:html}) %>
+
+<h1><%=schedule.translatedDay%> - <%=schedule.hour%></h1>
+<div class="row">
+    <div class="col-xs-3">
+        <form action="/editSchedule" method="POST">
+            <div class="form-group">
+                <label for="hour" class="form-label mt-4">Campos totales</label>
+                <input
+                        value="<%=schedule.total%>"
+                        type="number" name="total"
+                        min="1" class="form-control"
+                        id="hour" placeholder="12"
+                >
+            </div>
+            <input type="hidden" name="id" value="<%=schedule.id%>">
+            <input type="hidden" name="day" value="<%=schedule.day%>">
+            <a class="btn btn-secondary" href="/schedule?day=<%=schedule.day%>">Cancelar</a>
+            <button class="btn btn-success" type="submit">Guardar</button>
+        </form>
+    </div>
+</div>
+
+<%- include('../includes/end.ejs') %>
+

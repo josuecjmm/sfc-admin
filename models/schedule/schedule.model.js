@@ -29,9 +29,9 @@ module.exports = class Schedule {
         )
     }
 
-    static update(id) {
+    static updateTotal(total, id) {
         return db.insertUpdate(
-            scheduleQuery.update(), [id]
+            scheduleQuery.updateTotal(), [total, id]
         )
     }
 
@@ -56,6 +56,12 @@ module.exports = class Schedule {
     static delete() {
         return db.insertUpdate(
             scheduleQuery.delete(), []
+        )
+    }
+
+    static deleteSingle(id) {
+        return db.insertUpdate(
+            scheduleQuery.deleteSingle(), [id]
         )
     }
 }

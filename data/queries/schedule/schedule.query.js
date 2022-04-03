@@ -16,25 +16,25 @@ exports.select = () => {
 
 exports.selectSingle = () => {
     return `
-        SELECT id, hour, total
+        SELECT id, day, hour, total
         FROM DaySchedule
         WHERE id = ?
     `
 }
 
-exports.update = () => {
+exports.updateTotal = () => {
     return `
         UPDATE DaySchedule
-        set total = total - 1
+        set total = ?
         WHERE id = ?
     `
 }
 
 exports.updateRefillSchedules = () => {
     return `
-    UPDATE DaySchedule 
-    set total = ${totalAppointmentsPossible}
-    WHERE id IS NOT NULL
+        UPDATE DaySchedule
+        set total = ${totalAppointmentsPossible}
+        WHERE id IS NOT NULL
     `
 }
 
@@ -56,5 +56,13 @@ exports.updateAddTotal = () => {
 
 exports.delete = () => {
     return `DELETE
-            FROM DaySchedule`
+            FROM DaySchedule
+            WHERE id IS NOT NULL 
+            `
+}
+
+exports.deleteSingle = () => {
+    return `DELETE
+            FROM DaySchedule
+            WHERE id = ?`
 }

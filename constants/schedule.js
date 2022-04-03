@@ -25,4 +25,4 @@ exports.saturdaySchedule = [
     '9:00 AM'
 ];
 
-exports.totalAppointmentsPossible = 8;
+exports.totalAppointmentsPossible = 12;

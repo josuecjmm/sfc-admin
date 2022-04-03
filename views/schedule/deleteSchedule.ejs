@@ -1,0 +1,26 @@
+<%- include('../includes/head.ejs') %>
+
+<%- include('../includes/navigation.ejs', {html:html}, {html:html}) %>
+
+<h1 class="text text-danger">Borrar <%= schedule.translatedDay %> - <%= schedule.hour %></h1>
+&nbsp;<% if (appointmentRelatedUsers.length > 0 ) { %>
+<p class="text text-danger">Esto va a borrar las reservas de los usuarios:</p>
+<ul>
+    <% appointmentRelatedUsers.forEach(app => { %>
+        <li class="text text-danger"><%=app.fullName%></li>
+    <% }) %>
+</ul>
+<% } %>
+<div class="row">
+    <div class="col-xs-3">
+        <form action="/schedule/delete/<%= schedule.id %>" method="POST">
+            <a class="btn btn-secondary" href="/schedule?day=<%= schedule.day %>">Cancelar</a>
+            <input type="hidden" name="id" value="<%=schedule.id%>">
+            <input type="hidden" name="day" value="<%=schedule.day%>">
+            <button class="btn btn-danger">Borrar</button>
+        </form>
+    </div>
+</div>
+
+<%- include('../includes/end.ejs') %>
+
