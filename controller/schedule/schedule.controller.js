@@ -8,6 +8,15 @@ const html = require('../../constants/html/index')
 const dateUtil = require('../../utils/date')
 const dateConstants = require('../../constants/date')
 
+function orderSchedule(array) {
+    const amAppointments = array.filter(time => time.hour.includes('AM'));
+    const pmAppointments = array.filter(time => time.hour.includes('PM'));
+    const amSorted = amAppointments.sort((a, b) => (a.hour > b.hour) ? 1 : -1)
+    const pmSorted = pmAppointments.sort((a, b) => (a.hour > b.hour) ? 1 : -1)
+    const fullDaySortedAppointments = [...amSorted, ...pmSorted]
+    return fullDaySortedAppointments
+}
+
 exports.postCreateWeekSchedule = async (req, res, next) => {
     let valuesToInsert = '';
     weekdayDays.forEach(day => {
@@ -42,6 +51,7 @@ exports.getScheduleByDay = async (req, res) => {
 
         let daySchedules = await Schedule.getDay(day);
         daySchedules = JSON.parse(daySchedules)
+        daySchedules = orderSchedule(daySchedules)
         const translatedSchedules = daySchedules.map(day => {
             return {
                 id: day.id,
@@ -107,7 +117,62 @@ exports.getRecentSchedules = async (req, res, next) => {
     })
 }
 
+async function restoreDefaultSchedules() {
+    let currentSchedules = await Schedule.selectAll();
+    currentSchedules = JSON.parse(currentSchedules);
+    currentSchedules = currentSchedules.map(({day, hour}) => {
+        return JSON.stringify({
+            day,
+            hour
+        })
+    })
+
+    let schedulesDefault = [];
+
+    weekdayDays.forEach(day => {
+        weekdaysSchedule.forEach(hour => {
+            schedulesDefault.push(
+                JSON.stringify({
+                        day,
+                        hour,
+                    }
+                )
+            )
+        })
+    })
+
+    saturdaySchedule.forEach(hour => {
+        schedulesDefault.push(
+            JSON.stringify({
+                    day: 'Saturday',
+                    hour,
+                }
+            )
+        )
+    })
+
+    const missingSchedules = schedulesDefault.filter(schedule => {
+        if (!currentSchedules.includes(schedule)) {
+            return schedule
+        }
+    })
+
+    let valuesToInsert = '';
+
+    missingSchedules.forEach(schedule => {
+        schedule = JSON.parse(schedule);
+        const {day, hour} = schedule
+        valuesToInsert += `\n('${day}','${hour}',${totalAppointmentsPossible}),`
+    })
+    valuesToInsert = valuesToInsert.slice(0, -1);
+
+    if(valuesToInsert) {
+        await Schedule.save(valuesToInsert)
+    }
+}
+
 exports.putRefillSchedules = async (req, res, next) => {
+    await restoreDefaultSchedules();
     await Appointment.deleteAll();
     await Schedule.updateRefillSchedules()
     res.redirect('/schedule')
