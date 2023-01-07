@@ -8,7 +8,7 @@ const html = require('../../constants/html/index')
 const dateUtil = require('../../utils/date')
 const dateConstants = require('../../constants/date')
 
-exports.postCreateWeekSchedule = async (req, res, next) => {
+const getScheduleValuesToInsert = () => {
     let valuesToInsert = '';
     weekdayDays.forEach(day => {
         weekdaysSchedule.forEach(hour => {
@@ -18,8 +18,11 @@ exports.postCreateWeekSchedule = async (req, res, next) => {
     saturdaySchedule.forEach(hour => {
         valuesToInsert += `\n('Saturday','${hour}',${totalAppointmentsPossible}),`
     })
-    valuesToInsert = valuesToInsert.slice(0, -1);
-    await Schedule.save(valuesToInsert)
+    return valuesToInsert.slice(0, -1);
+};
+
+exports.postCreateWeekSchedule = async (req, res, next) => {
+    await Schedule.save(getScheduleValuesToInsert())
     res.redirect('/schedule')
 };
 
@@ -107,7 +110,52 @@ exports.getRecentSchedules = async (req, res, next) => {
     })
 }
 
+const setWeekObject = () => {
+    const week = [];
+    weekdayDays.forEach(day => {
+        weekdaysSchedule.forEach(schedule => {
+            week.push({
+                day,
+                hour: schedule
+            })
+        })
+    })
+    saturdaySchedule.forEach(schedule => {
+        week.push({
+            day: 'Saturday',
+            hour: schedule
+        })
+    })
+    return week;
+}
+
+const getDifference = (a, b) => {
+    return a.filter(element => {
+        return !b.includes(element);
+    });
+}
+
+const getJustMissingSchedules = async () => {
+    const week = setWeekObject().map(day => JSON.stringify(day));
+    let allExistingSchedules = await Schedule.selectAll();
+    allExistingSchedules = JSON.parse(allExistingSchedules).map(day => JSON.stringify(day));;
+    const difference = [
+        ...getDifference(week, allExistingSchedules),
+        ...getDifference(allExistingSchedules, week)
+    ];
+    return difference.map(schedule => JSON.parse(schedule));
+}
+
 exports.putRefillSchedules = async (req, res, next) => {
+    const missingSchedules = await getJustMissingSchedules();
+    let valuesToInsert = '';
+    missingSchedules.forEach(schedule => {
+            valuesToInsert += `\n('${schedule.day}','${schedule.hour}',${totalAppointmentsPossible}),`
+    })
+    valuesToInsert = valuesToInsert.slice(0, -1);
+    if(valuesToInsert !== '') {
+        await Schedule.save(valuesToInsert)
+    }
     await Appointment.deleteAll();
     await Schedule.updateRefillSchedules()
     res.redirect('/schedule')

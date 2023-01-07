@@ -1,4 +1,5 @@
 const {totalAppointmentsPossible} = require('../../../constants/schedule')
+const {selectAll} = require("../appointment/appointment.query");
 
 exports.insert = (values) => {
     return `INSERT INTO DaySchedule
@@ -11,6 +12,12 @@ exports.select = () => {
     return `SELECT id, day, hour, total
             FROM DaySchedule
             WHERE day = ?
+    `
+}
+
+exports.selectAll = () => {
+    return `SELECT day, hour
+            FROM DaySchedule
     `
 }
 
