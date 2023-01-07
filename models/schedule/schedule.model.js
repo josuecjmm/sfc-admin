@@ -23,6 +23,12 @@ module.exports = class Schedule {
         )
     }
 
+    static selectAll() {
+        return db.select(
+            scheduleQuery.selectAll(), []
+        )
+    }
+
     static selectSingle(id) {
         return db.select(
             scheduleQuery.selectSingle(), [id]
